@@ -5,6 +5,24 @@ from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 import base64
 
+def AES_dec(ciphertext):
+    key = get_random_bytes(16)  # 128-bit key
+    iv = get_random_bytes(16)   # Initialization vector
+
+    # Message to decryopt
+    # Example of input b'This is a secret message.'
+    data = ciphertext
+
+    # Decrypt
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    plaintext = cipher.decrypt(pad(data, AES.block_size))
+
+    # Print Base64-encoded output (for readability/transmission)
+    print("Decrypted (base64):", base64.b64encode(ciphertext).decode())
+
+    return base64.b64encode(plaintext).decode()
+
+
 def AES_enc(plaintext):
     # AES key must be 16, 24, or 32 bytes long
     key = get_random_bytes(16)  # 128-bit key
